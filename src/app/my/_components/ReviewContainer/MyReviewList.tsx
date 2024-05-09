@@ -1,16 +1,20 @@
+'use client';
+import { useRecoilValue } from 'recoil';
 import ReviewCard from './MyReviewCard';
-
-const reviews = [
-  { s_id: 'flo_store', content: '너무 좋았지모람' },
-  { s_id: 'flow_store', content: '으으' },
-];
+import { userState } from '@/recoils/atoms/UserState';
 
 const ReviewList = () => {
+  const { reviews } = useRecoilValue(userState);
+
   return (
-    <div className='w-full h-full'>
-      {reviews.map((review, idx) => (
-        <ReviewCard key={idx} store={review.s_id} content={review.content} />
-      ))}
+    <div className="h-full w-full">
+      {reviews.length > 0 ? (
+        reviews.map((review, idx) => (
+          <ReviewCard key={idx} store={review.storeId} content={review.comment} />
+        ))
+      ) : (
+        <p className="text-center">아직 작성한 리뷰가 없습니다</p>
+      )}
     </div>
   );
 };
